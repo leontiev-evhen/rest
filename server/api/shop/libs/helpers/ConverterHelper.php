@@ -9,19 +9,19 @@ class ConverterHelper
     {
         switch ($type)
         {
-            case 'json':
+                case '.json':
                 $data = self::convertJSON($data);
                 break;
 
-            case 'xml':
+            case '.xml':
                 $data = self::convertXML($data);
                 break;
 
-            case 'txt':
+            case '.txt':
                 $data = self::convertTXT($data);
                 break;
 
-            case 'html':
+            case '.html':
                 $data = self::convertHTML($data);
                 break;
         }
@@ -49,8 +49,7 @@ class ConverterHelper
     private function convertHTML ($data)
     {
         header('Content-Type: text/html; charset=utf-8');
-
-        if ($data['data'])
+        if (isset($data['data']))
         {
             $html = '<table><tbody>';
             

@@ -7,20 +7,28 @@ class RestServer
 	{
 		$HTTPMethod = $_SERVER['REQUEST_METHOD'];
 		$url = $_SERVER['REQUEST_URI'];
-		list($s, $a, $d, $db, $class, $method, $params) = explode('/', $url);
+		list($t, $s, $a, $d, $db, $class, $params) = explode('/', $url,7);
 		
-		$className = 'controllers\\'.ucfirst($class).'Controller';
-
+        $className = 'controllers\\'.ucfirst($class).'Controller';
+ 
 		if (class_exists($className))
 		{
 			$controller = new $className;
-			$method = self::checkMethod($method);
-			$type = (isset($_GET['type'])) ? $_GET['type']: TYPE;
-			
+            $type = (preg_match('#(\.[a-z]+)#', $url, $match)) ? $match[0]:TYPE;
+            $params = trim($params, $type);
+
 			switch($HTTPMethod)
 			{
-			    case 'GET':
-			        self::setMethod($controller, 'get'.$method, $type, explode('/', $params));
+            case 'GET':
+                    if (!empty($params))
+                    {
+                        $method = getAutoById;
+                    }
+                    else
+                    {
+                        $method = getAuto;
+                    }
+			        self::setMethod($controller, $method, $type, $params);
 			        break;
 			    case 'DELETE':
 			        self::setMethod('delete'.ucfirst($class), explode('/', $params));
@@ -43,16 +51,18 @@ class RestServer
 	}
 
 	private function setMethod($class, $method, $type, $param = false)
-	{
+    {
 	    if ( method_exists($class, $method) )
-	    {
-	        $data = call_user_func([$class, $method]);
+        {
+            if ($param)
+            {
+                $data = call_user_func_array([$class, $method],[$param]);
+            }
+            else
+            {
+                $data = call_user_func([$class, $method]);
+            }
 	        \helpers\ConverterHelper::chooseTypeOutput($data, $type);
 	    }
-	}
-
-	private function checkMethod ($method)
-	{
-		return (strstr($method, '_')) ? implode('', array_map('ucfirst', explode('_', $method))): $method;
 	}
 }

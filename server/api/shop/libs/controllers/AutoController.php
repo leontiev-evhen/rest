@@ -1,14 +1,9 @@
 <?php
 namespace controllers;
 
-class AutoController
+class AutoController extends Controller
 {
-    private $model;
-    public function __construct ()
-    {
-        $this->model = new \models\Model();
-    }
-    
+
     public function getAuto ()
     {
         $data = $this->model->getAuto();
@@ -21,25 +16,11 @@ class AutoController
             $result = ['status' => false, 'message' => 'failed get auto'];
         }
         
-        return json_encode($result);
-    }
-
-    public function getModelAuto ()
-    {
-        $model = $this->model->getModelAuto();
-        if ($model)
-        {
-            $result = ['status' => true, 'data' => $model, 'message' => 'getting model was success'];
-        }
-        else
-        {
-            $result = ['status' => false, 'message' => 'failed get model'];
-        }
-        
         return $result;
     }
 
-    public function getAutoInfo ($id)
+   
+    public function getAutoById ($id)
     {
         if (!empty($id)) 
         {
@@ -50,34 +31,16 @@ class AutoController
             }
             else
             {
-                $result = ['status' => false, 'message' => 'failed get auto'];
+                $result = ['status' => false, 'message' => 'failed get auto!'];
             }
             
-            return json_encode($result);
+            return $result;
         }
-        throw new SoapFault("Server","parameter id is required"); 
+        throw new Exception("Server","parameter id is required"); 
     }
 
-    public function postPreOrderAuto ($data)
-    {
-        if (!empty($data)) 
-        {
-            $aData = json_decode($data);
-            if ($this->model->preOrderAuto($aData))
-            {
-                $result = ['status' => true, 'message' => 'data received successfully'];
-            }
-            else
-            {
-                $result = ['status' => false, 'message' => 'error'];
-            }
-            
-            return json_encode($result);
-        }
-        throw new SoapFault("Server","parameter data is required");  
-    }
-
-    public function postFilterAuto ($data)
+    
+    public function postAuto ($data)
     {
         if (!empty($data))
         {
