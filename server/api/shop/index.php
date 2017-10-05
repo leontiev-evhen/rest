@@ -4,6 +4,7 @@ require_once 'Autoloader.php';
 
 try
 {
+	header("Access-Control-Allow-Origin:*");
     RestServer::run();
 }
 catch (Exception $e)

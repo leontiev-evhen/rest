@@ -1,8 +1,14 @@
 <?php
 namespace controllers;
 
-class Model extends Controller
+class ModelController extends \core\Controller
 {
+    protected $model;
+
+    public function __construct ()
+    {
+        $this->model = new \models\ModelsModel();
+    }
 
     public function getModel ()
     {

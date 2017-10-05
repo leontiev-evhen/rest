@@ -1,8 +1,16 @@
 <?php
 namespace controllers;
 
-class AutoController extends Controller
+
+class AutoController extends \core\Controller
 {
+
+    protected $model;
+
+    public function __construct ()
+    {
+        $this->model = new \models\AutoModel();
+    }
 
     public function getAuto ()
     {
@@ -22,9 +30,10 @@ class AutoController extends Controller
    
     public function getAutoById ($id)
     {
+        
         if (!empty($id)) 
         {
-            $data = $this->model->getAutoInfo($id);
+            $data = $this->model->getAutoById($id);
             if ($data)
             {
                 $result = ['status' => true, 'data' => $data, 'message' => 'getting auto was success'];
@@ -55,8 +64,8 @@ class AutoController extends Controller
                 $result = ['status' => false, 'message' => 'failed get auto'];
             }
             
-            return json_encode($result);
+            return $result;
         }
-        throw new SoapFault("Server","parameter data is required");  
+        throw new Exception("Server","parameter data is required");  
     }
 }

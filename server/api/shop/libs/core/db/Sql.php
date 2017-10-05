@@ -1,5 +1,5 @@
 <?php 
-namespace models;
+namespace core\db;
 
 class Sql
 {
@@ -18,6 +18,7 @@ class Sql
     protected $having;
     protected $orderBy;
     protected $limit;
+    
     public function select ($fields)
     {
         if ($this->checkArray($fields))

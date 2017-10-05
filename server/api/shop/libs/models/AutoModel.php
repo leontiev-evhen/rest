@@ -2,16 +2,8 @@
 namespace models;
 use \PDO;
 
-class Model extends Sql
+class AutoModel extends \core\Model
 {
-    private $connect;
-    public function __construct ()
-    {
-        if (!$this->connect = new PDO('mysql:host='.HOST.';dbname='.DB, USER, PASSWORD))
-        {
-            throw new Exception('Could not connect');
-        }
-    }
 
     public function getAuto ()
     {
@@ -28,18 +20,7 @@ class Model extends Sql
         return $STH->fetchAll();
     }
 
-    public function getModelAuto ()
-    {
-        $sql = $this->select([
-            'id',
-            'name'])
-        ->from('model')
-        ->execute();
-        $STH = $this->connect->query($sql);
-        return $STH->fetchAll();
-    }
-    
-    public function getAutoInfo ($id)
+    public function getAutoById ($id)
     {
         $sql = $this->select([
             'auto.id as ID',
@@ -60,29 +41,6 @@ class Model extends Sql
         return $STH->fetch();
     }
 
-    public function preOrderAuto ($data)
-    {
-        $sql = $this->insert()
-            ->from('orders')
-            ->values([
-            'auto_id' => '<?>',
-            'name' => '<?>',
-            'surname' => '<?>',
-            'payment_id' => '<?>'])
-           ->execute();
-        $sql = str_replace(["'<", ">'"], '', $sql);
-        
-        $STH = $this->connect->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-        $STH->bindParam(1, $data->auto_id);
-        $STH->bindParam(2, $data->name);
-        $STH->bindParam(3, $data->surname);
-        $STH->bindParam(4, $data->payment_id);
-        if ($STH->execute())
-        {
-            return true;
-        }  
-        return false;
-    }
 
     public function filterAuto ($data)
     {
