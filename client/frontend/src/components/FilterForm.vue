@@ -114,25 +114,24 @@ export default {
   	},
   	created() {
 
-  		var xhr = new XMLHttpRequest()
-	    var params = "action=getModel"
-	    xhr.open('POST', this.$parent.$parent.AJAX_URL, false)
-	    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-	    xhr.send(params);
+  		this.axios.get('http://courses.site/rest/client/api/model').then((response) => {
 
-	    if (xhr.status != 200) {
-	      	console.log( xhr.status + ': ' + xhr.statusText )
-	    } else {
-	      	var result = JSON.parse(xhr.responseText)
-	      	if (result.status) {
-				for (var key in result.model) {
-					var obj = {label: result.model[key].name, value: result.model[key].id}
-					this.params.models.push(obj)
-				}
-	      	} else {
-	      		console.log(result.message)
-	      	}
-	    }
+	        if (response.status == 200) {
+	            if (response.data.status) {
+	                for (var key in response.data.data) {
+						var obj = {
+							label: response.data.data[key].name,
+							value: response.data.data[key].id
+						}
+						this.params.models.push(obj)
+					}
+	            } else {
+	              console.log(response.data.message)
+	            }
+	        } else {
+	            	console.log(response.data.message)
+	        }
+    	})
   	},
 
   	components: {

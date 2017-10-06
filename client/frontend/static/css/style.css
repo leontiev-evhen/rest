@@ -169,3 +169,14 @@ h4 {
 .dropdown-toggle input::placeholder {
 	color:#fff;
 }
+
+.auth_form {
+  margin-top: 15px;
+}
+
+.register_link {
+  text-align: right;
+  color: #f90000;
+  display: block;
+  float: right;
+}

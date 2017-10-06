@@ -2,20 +2,14 @@
 
 class RestServer
 {
+    private static $type;
 
     public static function run ()
     {
-       /* foreach ($post as $key=>$item) 
-        {
-            if(isset($rules[$key]) && gettype($item) == $rules[$key]) {
-                echo 1;
-            } else {
-                echo 0;
-            }
-        }*/
+
         $HTTPMethod = $_SERVER['REQUEST_METHOD'];
         $url = $_SERVER['REQUEST_URI'];
-        list($t, $s, $a, $d, $db, $class, $params) = array_pad(explode('/', $url, 7), 7, null);
+        list($s, $a, $d, $db, $class, $params) = array_pad(explode('/', $url, 6), 6, null);
 
 
         $className = 'controllers\\'.ucfirst($class).'Controller';
@@ -23,33 +17,34 @@ class RestServer
         if (class_exists($className))
         {
             $controller = new $className;
-            $type = (preg_match('#(\.[a-z]+)#', $url, $match)) ? $match[0] : TYPE;
-            $params = trim($params, '/'.$type);
+            self::$type = (preg_match('#(\.[a-z]+)#', $url, $match)) ? $match[0] : TYPE;
+            $params = trim($params, '/'.self::$type);
 
             switch($HTTPMethod)
             {
-            case 'GET':
-                if (!empty($params))
-                {
-                    $method = 'AutoById';
-                }
-                else
-                {
-                    $method = 'Auto';
-                }
-                self::setMethod($controller, 'get'.$method, $type, $params);
-                break;
-            case 'DELETE':
-                self::setMethod('delete'.ucfirst($class), explode('/', $params));
-                break;
-            case 'POST':
-                self::setMethod($controller, 'post'.ucfirst($class), explode('/', $params));
-                break;
-            case 'PUT':
-                self::setMethod($controller, 'put'.ucfirst($class), explode('/', $params));
-                break;
-            default:
-                return false;
+                case 'GET':
+
+                    if (!empty($params))
+                    {
+                        $method = ucfirst($class).'ById';
+                    }
+                    else
+                    {
+                        $method = ucfirst($class);
+                    }
+                    self::setMethod($controller, 'get'.$method, $params);
+                    break;
+                case 'DELETE':
+                    self::setMethod('delete'.ucfirst($class), explode('/', $params));
+                    break;
+                case 'POST':
+                    self::setMethod($controller, 'post'.ucfirst($class), explode('/', $params));
+                    break;
+                case 'PUT':
+                    self::setMethod($controller, 'put'.ucfirst($class), explode('/', $params));
+                    break;
+                default:
+                    return false;
             }
         }
         else
@@ -59,7 +54,7 @@ class RestServer
         }
     }
 
-    private function setMethod($class, $method, $type, $param = false)
+    private function setMethod($class, $method, $param = false)
     {
         if ( method_exists($class, $method) )
         {
@@ -71,7 +66,7 @@ class RestServer
             {
                 $data = call_user_func([$class, $method]);
             }
-            \helpers\ConverterHelper::chooseTypeOutput($data, $type);
+            \helpers\ConverterHelper::chooseTypeOutput($data, self::$type);
         }
     }
 }

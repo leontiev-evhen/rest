@@ -17,14 +17,14 @@ class AutoController extends \core\Controller
         $data = $this->model->getAuto();
         if ($data)
         {
-            $result = ['status' => true, 'data' => $data, 'message' => 'getting auto was success'];
+            return $this->getServerAnswer(200, true, 'getting auto was success', $data);
         }
         else
         {
-            $result = ['status' => false, 'message' => 'failed get auto'];
+            return $this->getServerAnswer(500, false, 'failed get auto');
         }
         
-        return $result;
+        return $this->getServerAnswer(500, false, 'failed get auto'); 
     }
 
    
@@ -36,16 +36,14 @@ class AutoController extends \core\Controller
             $data = $this->model->getAutoById($id);
             if ($data)
             {
-                $result = ['status' => true, 'data' => $data, 'message' => 'getting auto was success'];
+                return $this->getServerAnswer(200, true, 'getting auto was success', $data);
             }
             else
             {
-                $result = ['status' => false, 'message' => 'failed get auto!'];
+                return $this->getServerAnswer(500, false, 'failed get auto');
             }
-            
-            return $result;
         }
-        throw new Exception("Server","parameter id is required"); 
+        return $this->getServerAnswer(400, false, 'Bad Request'); 
     }
 
     
@@ -66,6 +64,6 @@ class AutoController extends \core\Controller
             
             return $result;
         }
-        throw new Exception("Server","parameter data is required");  
+        return $this->getServerAnswer(400, false, 'Bad Request');  
     }
 }

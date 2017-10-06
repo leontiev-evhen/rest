@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <div class="header">
+      <div class="col-md-8">
       <a href="/"><img src="../static/img/logo.png" class="logo img-responsive"></a>
+      </div>
+      <div class="col-md-3">
+        <auth-form></auth-form>
+      </div>
     </div>
     <div class="line"></div>
     <div class="container">
@@ -11,14 +16,17 @@
 </template>
 
 <script>
+import AuthForm from './components/AuthForm.vue'
 export default {
   name: 'app',
   data() {
     return {
-      AJAX_URL: 'http://192.168.0.15/~user11/soap/soap_autoshop/client/index.php',
-      assetUrl: 'http://192.168.0.15/~user11/soap/soap_autoshop/server/assets/',
-      assetAutoUrl: 'http://192.168.0.15/~user11/soap/soap_autoshop/server/assets/auto/',
+      assetUrl: 'http://courses.site/rest/server/api/shop/assets/',
+      assetAutoUrl: 'http://courses.site/rest/server/api/shop/assets/auto/',
     }
+  },
+  components: {
+    AuthForm
   }
 }
 </script>

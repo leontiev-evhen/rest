@@ -47,15 +47,15 @@
 					  }
 					}
 	    
-				    this.axios.post('http://courses.site/rest/client/api/order', {
-				    	auto_id: this.$route.params.id,
+				    this.axios.post('http://courses.site/rest/client/api/orders', {
+				    	auto_id: +this.$route.params.id,
+				    	user_id: 1,
 				    	name: this.name,
 				    	surname: this.surname,
-				    	payment_id: this.payment_id
+				    	payment_id: +this.payment_id
 				    }, config)  
 				    .then(function (response) {
 				    	self.result_form = true
-					    console.log(response);
 					})
 					.catch(function (error) {
 					    console.log(error);

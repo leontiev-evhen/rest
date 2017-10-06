@@ -12,16 +12,17 @@ class ModelController extends \core\Controller
 
     public function getModel ()
     {
-        $model = $this->model->getModelAuto();
-        if ($model)
+
+        $data = $this->model->getModelAuto();
+        if ($data)
         {
-            $result = ['status' => true, 'data' => $model, 'message' => 'getting model was success'];
+            return $this->getServerAnswer(200, true, 'getting model was success', $data);
         }
         else
         {
-            $result = ['status' => false, 'message' => 'failed get model'];
+            return $this->getServerAnswer(500, false, 'failed get model');
         }
 
-        return $result;
+        return $this->getServerAnswer(500, false, 'failed get model');
     }
 }
