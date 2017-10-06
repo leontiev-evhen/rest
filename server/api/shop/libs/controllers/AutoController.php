@@ -13,7 +13,28 @@ class AutoController extends \core\Controller
     }
 
     public function getAuto ()
-    {
+    {<?php
+//echo base64_decode('YWxhZGRpbjpvcGVuc2VzYW1l');
+//
+//$length = 10;
+//$token = bin2hex(random_bytes($length));
+//function getToken($length){
+//     $token = "";
+//          $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//               $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
+//                    $codeAlphabet.= "0123456789";
+//                         $max = strlen($codeAlphabet); // edited
+//
+//                             for ($i=0; $i < $length; $i++) {
+//                                     $token .= $codeAlphabet[random_int(0, $max-1)];
+//                                         }
+//
+//                                             return $token;
+//                                             }
+//                                             echo getToken(32);
+//                                             //d3Bh0HZhSr4R4-rI4oqIk21eWDdK5mpf
+//                                             //YYgGRfutK08n74DwXEXSaGdXnBLju713
+        print_r(getallheaders());
         $data = $this->model->getAuto();
         if ($data)
         {
