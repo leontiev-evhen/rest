@@ -16,7 +16,9 @@
 				<li><span class="glyphicon glyphicon-plane"></span>Max speed: {{data.max_speed}} km/h</li>
 			</ul>
 			<hr>
-			<pre-order-form></pre-order-form>
+			<div v-if="this.$parent.user">
+				<pre-order-form></pre-order-form>
+			</div>
 		</div>
 	</div>
 	<div v-else>
@@ -36,7 +38,7 @@
   		}
   	},
   	created() {
-	    this.axios.get('http://courses.site/rest/client/api/auto/' + this.$route.params.id).then((response) => {
+	    this.axios.get(this.$parent.AJAX_URL + '/rest/client/api/auto/' + this.$route.params.id).then((response) => {
           
           if (response.status == 200) {
             if (response.data.status) {

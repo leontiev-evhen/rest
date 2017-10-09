@@ -120,10 +120,10 @@ h4 {
   border-color: #f90000;
 }
 .pblock-primary > .pblock-heading {
-  background-color: #f90000;
-  border-color: #f90000;
-  color: #fff;
-  padding: 10px 15px;
+    background-color: #f90000;
+    border-color: #f90000;
+    color: #fff;
+    padding: 10px 15px;
     border-bottom: 1px solid transparent;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
@@ -169,3 +169,40 @@ h4 {
 .dropdown-toggle input::placeholder {
 	color:#fff;
 }
+
+.auth_form {
+  margin-top: 15px;
+}
+
+.register_link {
+  text-align: right;
+  color: #f90000;
+  display: block;
+  float: right;
+}
+
+.user_block {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.logout {
+  font-size: 15px;
+}
+
+.user_info li {
+  font-size: 15px;
+}
+
+.success_m {
+  color: green;
+}
+
+.list_status li {
+  padding-top: 10px;
+} 
+
+.list_status li span {
+  width: 150px;
+  display: inline-block;
+} 

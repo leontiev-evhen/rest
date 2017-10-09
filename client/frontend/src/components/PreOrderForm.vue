@@ -4,12 +4,7 @@
 		<div class="success" v-if="result_form">Success send</div>
 		<div v-else>
 			<form @submit.prevent="validForm">
-				<p :class="{ 'control': true }"><input v-model="name" v-validate="'required|alpha'" :class="{'input form-control': true, 'is-danger': errors.has('name') }"type="text" name="name" placeholder="Name"></p>
-				<span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
 
-				<p :class="{ 'control': true }"><input v-model="surname" v-validate="'required|alpha'" :class="{'input form-control': true, 'is-danger': errors.has('surname') }"type="text" name="surname" placeholder="Surname"></p>
-				<span v-show="errors.has('surname')" class="help is-danger">{{ errors.first('surname') }}</span>
-				
 				<p :class="{ 'control': true }"><select v-model="payment_id" v-validate="'required'" :class="{'list form-control': true, 'is-danger': errors.has('payment_id') }" name="payment_id">
 			      		<option value="" disabled selected>Choose payment</option>
 			      		<option value="1">card</option>
@@ -30,8 +25,6 @@
   	name: 'PreOrderForm',
   	data() {
   		return {
-			name: '',
-			surname: '',
 			payment_id: '',
 			result_form: false
   		}
@@ -46,12 +39,10 @@
 					    'Content-Type' : 'application/x-www-form-urlencoded'
 					  }
 					}
-	    
-				    this.axios.post('http://courses.site/rest/client/api/orders', {
+	    	
+				    this.axios.post(this.$parent.$parent.AJAX_URL + '/rest/client/api/orders', {
 				    	auto_id: +this.$route.params.id,
-				    	user_id: 1,
-				    	name: this.name,
-				    	surname: this.surname,
+				    	user_id: +this.$parent.$parent.user.id,
 				    	payment_id: +this.payment_id
 				    }, config)  
 				    .then(function (response) {

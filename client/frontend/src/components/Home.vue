@@ -34,17 +34,17 @@ export default {
     }
   },
   created() {
-    this.axios.get('http://courses.site/rest/client/api/auto').then((response) => {
+    this.axios.get(this.$parent.AJAX_URL + '/rest/client/api/auto').then((response) => {
 
           if (response.status == 200) {
             if (response.data.status) {
               this.auto = response.data.data
               this.data = response.data.data
             } else {
-              console.log(response.message)
+              console.log(response.data.message)
             }
           } else {
-            console.log(response.statusText)
+            console.log(response.data.message)
           }
     })
   },

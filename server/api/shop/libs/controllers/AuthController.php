@@ -9,12 +9,12 @@ class AuthController extends \core\Controller
 
     public function __construct ()
     {
-        $this->model = new \models\AuthModel();
+        $this->model = new \models\UsersModel();
     }
 
     public function postAuth ()
     {
-
+    	
     }
 
     

@@ -9,6 +9,8 @@ import VueAxios from 'vue-axios'
 
 import VeeValidate from 'vee-validate';
 
+
+
 Vue.use(VeeValidate)
 Vue.use(VueAxios, axios)
 

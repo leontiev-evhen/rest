@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Окт 06 2017 г., 15:23
+-- Время создания: Окт 09 2017 г., 13:21
 -- Версия сервера: 10.1.25-MariaDB-
 -- Версия PHP: 7.0.22-0ubuntu0.17.04.1
 
@@ -117,18 +117,24 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `auto_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `name` varchar(30) NOT NULL,
-  `surname` varchar(30) NOT NULL,
-  `payment_id` int(11) NOT NULL
+  `payment_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id`, `auto_id`, `user_id`, `name`, `surname`, `payment_id`) VALUES
-(20, 1, 1, 'test', 'sfsd', 2),
-(21, 1, 1, 'test', 'sfsd', 2);
+INSERT INTO `orders` (`id`, `auto_id`, `user_id`, `payment_id`, `status`) VALUES
+(25, 4, 1, 1, 0),
+(26, 3, 1, 1, 0),
+(27, 3, 3, 1, 0),
+(28, 4, 3, 2, 1),
+(29, 3, 7, 2, 0),
+(30, 3, 7, 1, 0),
+(31, 10, 3, 1, 0),
+(32, 1, 3, 2, 1),
+(33, 1, 3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -161,8 +167,19 @@ CREATE TABLE `users` (
   `surname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `created_at` date NOT NULL
+  `token` varchar(255) NOT NULL,
+  `token_create_at` varchar(255) NOT NULL,
+  `created_at` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `token`, `token_create_at`, `created_at`) VALUES
+(3, 'test', 'sfsd', 'leo@mail.ru', '$2y$10$qAJ3onzLf9dd1wPMEg8wNufRSyUhkOwTB4pqYya1h9UzX66YQEZFa', 'PK98RUIx46sUBjm9lcs68jhAo00AE0Fi', '1507548020', '2017-10-07 00:00:00'),
+(5, 'yevhen', 'leo', 'leo2@mail.ru', '$2y$10$Lsx3QqcKZDJ7pkGidJsD4ePNVEYJOFlNQISn8hc.ZdU64V27cpeFu', '', '', '1507535389'),
+(7, 'test', 'sfsd', 'test@test.com', '$2y$10$8cqo4MhwZOoFeYT69BqwIeI4.7nqQUyPPi6nKBNm9ZB.hYCPqf.3m', 'aKgV24JhTrG8YHsipAuh9o5BJSuavmkh', '1507532575', '1507536188');
 
 --
 -- Индексы сохранённых таблиц
@@ -236,7 +253,7 @@ ALTER TABLE `model`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT для таблицы `payment_methods`
 --
@@ -246,7 +263,7 @@ ALTER TABLE `payment_methods`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --

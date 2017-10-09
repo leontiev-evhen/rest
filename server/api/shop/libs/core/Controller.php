@@ -1,5 +1,6 @@
 <?php
 namespace core;
+use \Exception;
 
 class Controller
 {
@@ -15,14 +16,18 @@ class Controller
     protected function validate ()
     {
     	$this->data = $this->getData();
-    	foreach ($this->data as $key=>$item) 
+        if ($this->data)
         {
-            if (!isset($this->rules[$key]) || gettype($item) != $this->rules[$key]) 
+            foreach ($this->data as $key=>$item) 
             {
-                return false;
-            } 
+                if (!isset($this->rules[$key]) || gettype($item) != $this->rules[$key]) 
+                {
+                    return false;
+                } 
+            }
+            return true;
         }
-        return true;
+        throw new Exception('Invalid data');
     }
 
     protected function getData ()

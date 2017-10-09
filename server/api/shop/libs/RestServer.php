@@ -18,30 +18,22 @@ class RestServer
         {
             $controller = new $className;
             self::$type = (preg_match('#(\.[a-z]+)#', $url, $match)) ? $match[0] : TYPE;
-            $params = trim($params, '/'.self::$type);
+         
+            $params = ltrim($params, self::$type);
 
             switch($HTTPMethod)
             {
                 case 'GET':
-
-                    if (!empty($params))
-                    {
-                        $method = ucfirst($class).'ById';
-                    }
-                    else
-                    {
-                        $method = ucfirst($class);
-                    }
-                    self::setMethod($controller, 'get'.$method, $params);
+                    self::setMethod($controller, 'get'.ucfirst($class), $params);
                     break;
                 case 'DELETE':
-                    self::setMethod('delete'.ucfirst($class), explode('/', $params));
+                    self::setMethod('delete'.ucfirst($class), $params);
                     break;
                 case 'POST':
-                    self::setMethod($controller, 'post'.ucfirst($class), explode('/', $params));
+                    self::setMethod($controller, 'post'.ucfirst($class), $params);
                     break;
                 case 'PUT':
-                    self::setMethod($controller, 'put'.ucfirst($class), explode('/', $params));
+                    self::setMethod($controller, 'put'.ucfirst($class), $params);
                     break;
                 default:
                     return false;

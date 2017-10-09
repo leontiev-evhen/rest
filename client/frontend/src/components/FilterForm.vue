@@ -81,24 +81,59 @@ export default {
   		filterAuto: function() {
   			this.$validator.validateAll().then((result) => {
 		        if (result) {
-					var xhr = new XMLHttpRequest();
-				    var params = "action=filter&model_id=" + ((this.model_id.value) ? this.model_id.value : 0) + "&year="+this.year+"&engine_capacity="+this.engine_capacity+"&color="+this.color+"&max_speed="+this.max_speed+"&price="+this.price;
-				    xhr.open('POST', this.$parent.$parent.AJAX_URL, false);
-				    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				    xhr.send(params);
 
-				    if (xhr.status != 200) {
-				      	console.log( xhr.status + ': ' + xhr.statusText );
-				    } else {
-				      	var result = JSON.parse(xhr.responseText)
-				      	if (result.status) {
-							this.$parent.data = result.auto;
-							this.$parent.filter_result = true
-				      	} else {
-				      		this.$parent.filter_result = false
+					var filterModel = (el) => {
+						if (el.model_id == this.model_id.value || this.model_id == '') {
+							return true
+						}
+						return false
+					}
 
-				      	}
-				    }
+					var filterYear = (el) => {
+						if (el.year == this.year || this.year == '') {
+							return true
+						}
+						return false
+					}
+
+					var filterEngineCapacity = (el) => {
+						if (el.engine_capacity == this.engine_capacity || this.engine_capacity == ''){
+							return true
+						}
+						return false
+					}
+
+					var filterColor = (el) => {
+						if (el.color == this.color || this.color == '') {
+							return true
+						}
+						return false
+					}
+
+					var filterMaxSpeed = (el) => {
+						if (el.max_speed <= this.max_speed || this.max_speed == '') {
+							return true
+						}
+						return false
+					}
+
+					var filterPrice = (el) => {
+						if (el.price <= this.price || this.price == '') {
+							return true
+						}
+						return false
+					}
+					
+					var auto = this.$parent.data.filter((el) => {
+						return filterModel(el) && filterYear(el) && filterEngineCapacity(el) && filterColor(el) && filterMaxSpeed(el) && filterPrice(el)
+					})
+
+					if (auto.length != 0) {
+						this.$parent.data = auto
+						this.$parent.filter_result = true
+					} else {
+						this.$parent.filter_result = false
+					}
 				}
 			});
   		},
@@ -110,11 +145,11 @@ export default {
 	    	this.color = '',
 	    	this.max_speed = 0
 	    	this.$parent.data = this.$parent.getAuto()
+	    	this.$parent.filter_result = true
   		},
   	},
   	created() {
-
-  		this.axios.get('http://courses.site/rest/client/api/model').then((response) => {
+  		this.axios.get(this.$parent.$parent.AJAX_URL + '/rest/client/api/model').then((response) => {
 
 	        if (response.status == 200) {
 	            if (response.data.status) {
@@ -133,7 +168,6 @@ export default {
 	        }
     	})
   	},
-
   	components: {
     	RangeSlider, vSelect
   	}

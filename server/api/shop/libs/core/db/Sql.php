@@ -127,15 +127,50 @@ class Sql
     {
         switch ($this)
         {
-        case !empty($this->insert):
-            return $this->insert.$this->from.$this->values;
-        case !empty($this->select):
-            return $this->select.$this->from.$this->values.$this->join.$this->where.$this->groupBy.$this->having.$this->orderBy.$this->limit;
-        case !empty($this->update):
-            return $this->update.$this->from.$this->set.$this->where;
-        case !empty($this->delete):
-            return $this->delete.$this->from.$this->where;
-        }
+            case !empty($this->insert):
+               
+                $sql = $this->insert.$this->from.$this->values;
+                $this->clear(); 
+                return $sql;
+
+            case !empty($this->select):
+                
+                $sql = $this->select.$this->from.$this->values.$this->join.$this->where.$this->groupBy.$this->having.$this->orderBy.$this->limit;
+                $this->clear(); 
+                return $sql;
+
+            case !empty($this->update):
+                
+                $sql = $this->update.$this->from.$this->set.$this->where;
+                $this->clear(); 
+                return $sql;
+
+            case !empty($this->delete):
+                
+                $sql = $this->delete.$this->from.$this->where;
+                $this->clear(); 
+                return $sql;
+        }   
+        $this->clear();    
     }
+
+    private function clear ()
+    {
+        $this->select = null;
+        $this->insert = null;
+        $this->update = null;
+        $this->delete = null;
+        $this->from = null;
+        $this->values = null;
+        $this->set = null;
+        $this->distinct = null;
+        $this->join = null;
+        $this->where = null;
+        $this->groupBy = null;
+        $this->having = null;
+        $this->orderBy = null;
+        $this->limit = null;
+    }
+
 }
 ?>
